@@ -1,0 +1,29 @@
+.sticky-note {
+  width: 8rem;
+  height: 8rem;
+  background-color: rgb(126, 126, 126);
+  text-align: center;
+  vertical-align: middle;
+  display: block;
+  position: absolute;
+  top: 256px;
+  right: 256px;
+  font-size: 0.5rem;
+}
+
+.sticky-date {
+  position: absolute;
+  right: 0.2rem;
+  bottom: 0.2rem;
+  font-size: 0.5rem;
+  color: white;
+}
+
+.sticky-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-style: italic;
+  font-size: 1rem;
+}

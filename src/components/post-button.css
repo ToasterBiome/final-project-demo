@@ -1,0 +1,7 @@
+.post-button {
+  background-color: rgba(1, 1, 1, 0);
+  border-style: none;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}

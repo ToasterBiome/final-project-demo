@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  /* font-size is a property that is inherited. */
+  font-size: 20px;
+}
+
+body {
+  /*You can apply multiple style declarations inside of a block */
+  background-color: rgb(49, 49, 49);
+  color: white;
+  max-width: 800px;
+  /* This margin auto trick centers block elements. */
+  margin: 0 auto;
+  font-family: "PT Sans", sans-serif;
+}
+a {
+  color: white;
+}
+
+/* Base Link State */
+a {
+  transition: color 0.1s, background-color 0.15s;
+}
+
+/* Unvisited Link */
+a:link {
+  background-color: transparent;
+  color: purple;
+}
+
+/* Visited Link */
+a:visited {
+  background-color: transparent;
+  color: purple;
+}
+
+/* Focused Link */
+a:focus {
+  background-color: purple;
+  color: white;
+}
+
+/* Hover Link */
+a:hover {
+  background-color: purple;
+  color: white;
+}
+
+.welcome-message {
+  font-size: 1.25em;
+}

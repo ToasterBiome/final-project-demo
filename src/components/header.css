@@ -1,0 +1,8 @@
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header__logo {
+  font-size: 4rem;
+}
