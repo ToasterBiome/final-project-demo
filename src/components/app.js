@@ -22,7 +22,7 @@ function App() {
   }
 
   const [classStyle,setClassStyle] = useState({
-    display: "block"
+    display: "none"
 });
 
   const showCreateNote = () => {
