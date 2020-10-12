@@ -1,6 +1,8 @@
 .post-button {
   background-color: rgba(1, 1, 1, 0);
-  border-style: none;
+  border-style: solid;
+  border-color: white;
+  border-radius: 1rem;
   position: absolute;
   bottom: 1rem;
   right: 1rem;

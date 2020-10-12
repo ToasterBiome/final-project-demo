@@ -1,0 +1,59 @@
+.create-note {
+  width: 32rem;
+  height: 32rem;
+  background-color: rgb(26, 26, 26);
+  text-align: center;
+  vertical-align: middle;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  border-style: solid;
+  border-color: white;
+  border-radius: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.create-note-closed {
+  display: none;
+}
+
+.create-button {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: white;
+  background-color: black;
+  border-style: solid;
+  border-color: white;
+  border-radius: 0.5rem;
+  width: 8rem;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.exit-button {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: white;
+  background-color: black;
+  border-style: solid;
+  border-color: white;
+  border-radius: 0.5rem;
+  width: 4rem;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.note-input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16rem;
+  height: 16rem;
+  background-color: rgb(168, 168, 168);
+}
