@@ -2,7 +2,7 @@
 
 A Small Chat is a web application where you can "post" sticky notes for people to see. It is currently client only and you can only push notes to yourself and what is displayed at the start is static from a file. No communication yet :(
 
-The notes you submit dissapear on reload, as they are not saved.
+The notes you submit disappear on reload, as they are not saved.
 
 
 
