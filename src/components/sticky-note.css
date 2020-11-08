@@ -21,6 +21,14 @@
   color: white;
 }
 
+.sticky-username {
+  position: absolute;
+  left: 0.2rem;
+  bottom: 0.2rem;
+  font-size: 0.5rem;
+  color: white;
+}
+
 .sticky-data {
   position: absolute;
   top: 50%;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import PostButton from "./post-button";
@@ -6,6 +6,7 @@ import StickyNote from "./sticky-note";
 import stickyNoteData from "../data/notes";
 import { motion } from "framer-motion";
 import CreateNote from "./create-note";
+import { notesCollection } from "../data/firebase";
 
 
 /**
@@ -14,7 +15,22 @@ import CreateNote from "./create-note";
 
 function App() {
 
-  const [notes,setNotes] = useState(stickyNoteData);
+  const [notes,setNotes] = useState([]);
+
+  useEffect(() => {
+
+    const onNext = (snapshot) => {
+      const docs = snapshot.docs;
+      setNotes(docs);
+  }
+
+  const onError = (error) => {
+    console.log(error);
+}
+
+  const unsubscribe = notesCollection.orderBy("message").onSnapshot(onNext,onError);
+return unsubscribe;
+  },[]);
 
   const onUpdateNotes = (text,date) => {
     stickyNoteData.push({text:text,date:date});
@@ -36,8 +52,24 @@ function App() {
   return (
     <div>
       <Header></Header>
-
-      {notes.map((data) => {
+      {notes.map((noteData)=> {
+        const data = noteData.data();
+        console.log(data.date);
+        return (
+          <motion.div
+          initial={{ opacity: 0, transition: { ease: "easeOut" } }}
+          animate={{ opacity: 1 }}>
+          <StickyNote
+            key={data.message}
+            message={data.message}
+            username={data.username}
+            date={new Date(data.date.toDate()).toLocaleDateString("en-US")}
+          ></StickyNote>
+          </motion.div>
+        );
+      })}
+      {/* {notes.map((data) => {
+        console.log(data);
         return (
           <motion.div
           initial={{ opacity: 0, transition: { ease: "easeOut" } }}
@@ -49,7 +81,7 @@ function App() {
           ></StickyNote>
           </motion.div>
         );
-      })}
+      })} */}
 
       
 

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import "./create-note.css";
 import stickyNoteData from "../data/notes";
 import StickyNote from "./sticky-note";
+import { notesCollection } from '../data/firebase';
 
 function CreateNote(props) {
 
@@ -9,13 +10,21 @@ function CreateNote(props) {
 
     const [noteInput,setNoteInput] = useState("Enter your text here!");
 
-    const onSubmit = (event) => {
-        console.log(noteInput);
-        console.log(stickyNoteData);
-        onUpdateNotes(noteInput,Date.now());
+    const onSubmit = async (event) => {
         setClassStyle({
             display:"none"
         });
+
+        try {
+            await notesCollection.add({
+                message:noteInput,
+                date: new Date(Date.now())
+            })
+        } catch(error) {
+            console.log(error);
+        }
+
+
       };
 
       const onExit = (event) => {
