@@ -7,7 +7,7 @@ import stickyNoteData from "../data/notes";
 import { motion } from "framer-motion";
 import CreateNote from "./create-note";
 import { notesCollection } from "../data/firebase";
-
+import Draggable from "react-draggable";
 
 /**
  * The app is responsible for routing and loading the appropriate page within the application.
@@ -56,16 +56,23 @@ return unsubscribe;
         const data = noteData.data();
         console.log(data.date);
         return (
+          <Draggable key={data.message + "_drag"}>
           <motion.div
           initial={{ opacity: 0, transition: { ease: "easeOut" } }}
           animate={{ opacity: 1 }}>
           <StickyNote
             key={data.message}
+            id={noteData.id}
             message={data.message}
             username={data.username}
-            date={new Date(data.date.toDate()).toLocaleDateString("en-US")}
+            locked={data.locked}
+            reaction_laugh={data.reaction_laugh}
+            reaction_sad={data.reaction_sad}
+            reaction_angry={data.reaction_angry}
+            date={data.date.toDate().getTime()}
           ></StickyNote>
           </motion.div>
+          </Draggable>
         );
       })}
       {/* {notes.map((data) => {

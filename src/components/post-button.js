@@ -5,7 +5,7 @@ function PostButton(props) {
   const {onClick} = props;
   return (
     <button className="post-button" onClick={onClick}>
-      <img src={create}></img>
+      <img alt="Button to create a new post." src={create}></img>
     </button>
   );
 }
