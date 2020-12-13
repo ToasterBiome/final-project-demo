@@ -4,12 +4,16 @@ import Toast from 'light-toast';
 import { notesCollection } from '../data/firebase';
 
 
-function CreateNote(props) {
+function EditNote(props) {
+
+    const {editID} = props;
 
     const {classStyle,setClassStyle} = props;
 
     const [noteInput,setNoteInput] = useState("");
     const [nameInput,setNameInput] = useState("");
+
+
 
     const onSubmit = async (event) => {
         
@@ -30,12 +34,10 @@ function CreateNote(props) {
 
         try {
 
-            await notesCollection.add({
-                message:noteInput,
-                date: new Date(Date.now()),
-                username:props.user.displayName,
-                uid:props.user.uid
-            })
+            const docRef = notesCollection.doc(editID);
+            await docRef.set({
+                message:noteInput
+            },{merge: true})
 
             setClassStyle({
                 display:"none"
@@ -68,14 +70,14 @@ function CreateNote(props) {
     return (
 
         <div className="create-note" style={classStyle}>
-            Create New Note
-            <textarea className="note-input" placeholder="Enter your message here!" value={noteInput} onChange={handleInput}></textarea>
+            Edit Note {editID}
+            <textarea className="note-input" placeholder="Enter your edited message here!" value={noteInput} onChange={handleInput}></textarea>
     <div className="name-display">Display Name: {props.authenticated ? props.user.displayName : "Unknown"}</div>
             
             <button className="exit-button" onClick={onExit}>Exit</button>
-            <button className="create-button" onClick={onSubmit}>Create Note</button>
+            <button className="create-button" onClick={onSubmit}>Edit Note</button>
         </div>
     )
 }
 
-export default CreateNote
+export default EditNote

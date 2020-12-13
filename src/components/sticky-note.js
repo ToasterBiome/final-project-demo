@@ -4,7 +4,8 @@ import Toast from 'light-toast';
 import { notesCollection } from "../data/firebase";
 
 function StickyNote(props) {
-  const { id,message, date,username,locked } = props;
+  const { id,message, date,username,locked, uid} = props;
+  const {editID} = props;
 
   //reactions
 
@@ -63,6 +64,16 @@ function StickyNote(props) {
       Toast.info("Explanation posts are locked. Nice try though!");
       return;
     }
+
+    if(!props.authenticated) {
+      Toast.info("Please log in before attempting to delete.");
+      return;
+    }
+    if(props.user.uid != props.uid) {
+      Toast.info("You cannot delete messages that are not yours!");
+      return;
+    }
+
     try {
       const docRef = notesCollection.doc(id);
       await docRef.delete();
@@ -75,7 +86,16 @@ function StickyNote(props) {
   }
 
   const onEdit = async () => {
-    Toast.info("It wouldn't be very fun to edit random notes! Coming in Code Sprint C with users :)",2000)
+    if(!props.authenticated) {
+      Toast.info("Please log in before attempting to edit.");
+      return;
+    }
+    if(props.user.uid == props.uid) {
+      props.setEditID(id);
+      props.showEditNote();
+    } else {
+      Toast.info("You cannot edit messages that are not yours!");
+    }
   }
 
   const onEmoteReact = async (reaction) => {

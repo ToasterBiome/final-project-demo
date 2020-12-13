@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
-
+import "firebase/auth";
 // REACT_APP_API_KEY="AIzaSyAMqismc1ATJ6tx9ylHrIJE0j5cJvWiyIc"
 // REACT_APP_AUTH_DOMAIN="colum-code-sprint-b-51b30.firebaseapp.com"
 // REACT_APP_DATABASE_URL="https://colum-code-sprint-b-51b30.firebaseio.com"
@@ -22,7 +22,10 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+
 const db = firebase.firestore();
 const notesCollection = db.collection("notes");
 export default db;
-export {notesCollection};
+export {notesCollection, provider, auth, firebase };
