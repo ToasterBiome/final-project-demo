@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./sticky-note.css";
 import Toast from 'light-toast';
-import { notesCollection } from "../data/firebase";
+import { notesCollection, storage } from "../data/firebase";
+import Avatar from "./avatar.js";
 
 function StickyNote(props) {
   const { id,message, date,username,locked, uid} = props;
@@ -9,7 +10,7 @@ function StickyNote(props) {
 
   //reactions
 
-  let {reaction_laugh,reaction_sad,reaction_angry} = props;
+  let {reaction_laugh,reaction_sad,reaction_angry,reaction_heart} = props;
   if(reaction_laugh === undefined) {
     reaction_laugh = 0;
   }
@@ -19,13 +20,16 @@ function StickyNote(props) {
   if(reaction_angry === undefined) {
     reaction_angry = 0;
   }
+  if(reaction_heart === undefined) {
+    reaction_heart = 0;
+  }
   const [classStyle,setClassStyle] = useState({
     visibility: "hidden"
-});
+  });
   console.log(date);
   const x = useState(Math.random() * 800 - 400);
-  const y = useState(Math.random() * 400);
-  const color = (locked == true) ? "rgb(0, 64, 0)":"rgb(26, 26, 26)"
+  const y = useState(Math.random() * 200);
+  const color = (locked === true) ? "rgb(0, 64, 0)":"rgb(26, 26, 26)"
   console.log("COLOR: " + color + " LOCKED: " + locked);
   console.log(x[0]);
   const divStyle = {
@@ -69,7 +73,7 @@ function StickyNote(props) {
       Toast.info("Please log in before attempting to delete.");
       return;
     }
-    if(props.user.uid != props.uid) {
+    if(props.user.uid !== props.uid) {
       Toast.info("You cannot delete messages that are not yours!");
       return;
     }
@@ -90,8 +94,9 @@ function StickyNote(props) {
       Toast.info("Please log in before attempting to edit.");
       return;
     }
-    if(props.user.uid == props.uid) {
+    if(props.user.uid === props.uid) {
       props.setEditID(id);
+      props.setEditMessage(message);
       props.showEditNote();
     } else {
       Toast.info("You cannot edit messages that are not yours!");
@@ -110,6 +115,9 @@ function StickyNote(props) {
         case "angry":
           reaction_angry++;
         break;
+        case "heart":
+          reaction_heart++;
+        break;
         default: 
 
         break;
@@ -120,7 +128,8 @@ function StickyNote(props) {
       await docRef.set({
         reaction_laugh,
         reaction_sad,
-        reaction_angry
+        reaction_angry,
+        reaction_heart
       },{merge: true})
     } catch (error) {
       console.log(error);
@@ -131,7 +140,7 @@ function StickyNote(props) {
   const note = (
     <div className="sticky-note" style={divStyle} onMouseEnter={onHoverStart} onMouseLeave={onHoverEnd}>
       <div className="controls" style={classStyle}><button onClick={onEdit}>Edit</button><button onClick={onDelete}>Delete</button></div>
-      <div className="reactions" style={classStyle}><button onClick={() => onEmoteReact("laugh")}>😆{reaction_laugh}</button><button onClick={() => onEmoteReact("sad")}>😢{reaction_sad}</button><button onClick={() => onEmoteReact("angry")}>😡{reaction_angry}</button></div>
+      <div className="reactions" style={classStyle}><button onClick={() => onEmoteReact("laugh")}>😆{reaction_laugh}</button><button onClick={() => onEmoteReact("sad")}>😢{reaction_sad}</button><button onClick={() => onEmoteReact("angry")}>😡{reaction_angry}</button><button onClick={() => onEmoteReact("heart")}>💕{reaction_heart}</button></div>
       <div className="sticky-data">{message}</div>
       <div className="sticky-date">{formattedDate}</div>
       <div className="sticky-username">{username}</div>

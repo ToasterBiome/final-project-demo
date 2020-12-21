@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import "./create-note.css";
 import Toast from 'light-toast';
 import { notesCollection } from '../data/firebase';
@@ -8,12 +8,18 @@ function EditNote(props) {
 
     const {editID} = props;
 
+    const {editMessage} = props;
+
     const {classStyle,setClassStyle} = props;
 
-    const [noteInput,setNoteInput] = useState("");
-    const [nameInput,setNameInput] = useState("");
+    const [noteInput,setNoteInput] = useState(editMessage);
 
-
+    useEffect(() => {
+        if(noteInput === "") {
+            setNoteInput(editMessage);
+        }
+    
+      },[editMessage]);
 
     const onSubmit = async (event) => {
         
@@ -53,9 +59,11 @@ function EditNote(props) {
 
       const onExit = (event) => {
           console.log("close");
+          setNoteInput("");
           setClassStyle({
             display:"none"
-        });
+        }
+        );
 
       };
 
@@ -63,15 +71,12 @@ function EditNote(props) {
           setNoteInput(event.target.value);
       }
 
-      const handleNameInput = (event) => {
-        setNameInput(event.target.value);
-    }
 
     return (
 
         <div className="create-note" style={classStyle}>
-            Edit Note {editID}
-            <textarea className="note-input" placeholder="Enter your edited message here!" value={noteInput} onChange={handleInput}></textarea>
+            Editing Note
+            <textarea className="note-input" value={noteInput} onChange={handleInput}></textarea>
     <div className="name-display">Display Name: {props.authenticated ? props.user.displayName : "Unknown"}</div>
             
             <button className="exit-button" onClick={onExit}>Exit</button>

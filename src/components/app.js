@@ -10,6 +10,7 @@ import EditNote from "./edit-note";
 import { notesCollection } from "../data/firebase";
 import Draggable from "react-draggable";
 import {provider, auth} from "../data/firebase";
+import useAllNotes from "../hooks/use-all-notes";
 /**
  * The app is responsible for routing and loading the appropriate page within the application.
  */
@@ -19,24 +20,9 @@ function App() {
   const [user,setUser] = useState(null);
   const isAuthenticated = user !== null;
   const [editID,setEditID] = useState(null);
-  const [notes,setNotes] = useState([]);
+  const [editMessage,setEditMessage] = useState("");
+  const [notes] = useAllNotes();
 
-  useEffect(() => {
-
-    const onNext = (snapshot) => {
-      const docs = snapshot.docs;
-      setNotes(docs);
-  }
-
-  
-
-  const onError = (error) => {
-    console.log(error);
-}
-
-  const unsubscribe = notesCollection.orderBy("message").onSnapshot(onNext,onError);
-return unsubscribe;
-  },[]);
 
   useEffect(() => {
     const authUnsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -44,11 +30,6 @@ return unsubscribe;
     });
     return authUnsubscribe;
   }, []);
-
-  const onUpdateNotes = (text,date) => {
-    stickyNoteData.push({text:text,date:date});
-    setNotes(stickyNoteData);
-  }
 
   const [classStyle,setClassStyle] = useState({
     display: "none"
@@ -94,6 +75,7 @@ return unsubscribe;
             reaction_laugh={data.reaction_laugh}
             reaction_sad={data.reaction_sad}
             reaction_angry={data.reaction_angry}
+            reaction_heart={data.reaction_heart}
             date={data.date.toDate().getTime()}
             user={user} 
             authenticated={isAuthenticated}
@@ -101,6 +83,7 @@ return unsubscribe;
             showEditNote={showEditNote}
             editID={editID}
             setEditID={setEditID}
+            setEditMessage={setEditMessage}
           ></StickyNote>
           </motion.div>
           </Draggable>
@@ -125,8 +108,8 @@ return unsubscribe;
 
       <Footer></Footer>
 
-      <EditNote notesList={notes} onUpdateNotes={onUpdateNotes} classStyle={editClassStyle} setClassStyle={setEditClassStyle} user={user} authenticated={isAuthenticated} editID={editID}></EditNote>
-      <CreateNote notesList={notes} onUpdateNotes={onUpdateNotes} classStyle={classStyle} setClassStyle={setClassStyle} user={user} authenticated={isAuthenticated}></CreateNote>
+      <EditNote notesList={notes} classStyle={editClassStyle} setClassStyle={setEditClassStyle} user={user} authenticated={isAuthenticated} editID={editID} editMessage={editMessage}></EditNote>
+      <CreateNote notesList={notes} classStyle={classStyle} setClassStyle={setClassStyle} user={user} authenticated={isAuthenticated}></CreateNote>
 
       <PostButton onClick={showCreateNote} user={user} authenticated={isAuthenticated}></PostButton>
     </div>

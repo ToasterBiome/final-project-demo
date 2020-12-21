@@ -1,6 +1,6 @@
 .sticky-note {
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
 
   text-align: center;
   vertical-align: middle;
@@ -55,7 +55,12 @@
   transform: translate(-50%, -50%);
   font-style: italic;
   font-size: 1rem;
-  width: 100%;
+  text-align: center;
+  width: 90%;
+  height: 60%;
+  white-space: normal;
+  overflow: auto;
+  text-overflow: ellipsis;
 }
 
 button {
